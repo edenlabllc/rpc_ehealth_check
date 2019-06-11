@@ -46,7 +46,13 @@ defmodule HealthCheck.Worker do
   defp send_health_check(server) do
     Logger.info("Send health check to #{server}")
 
-    case get_ergonode(server) do
+    basename =
+      case String.split(to_string(server), "@") do
+        [basename, _] -> basename
+        _ -> server
+      end
+
+    case get_ergonode(basename) do
       nil ->
         case :global.whereis_name(server) do
           :undefined ->
