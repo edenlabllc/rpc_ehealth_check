@@ -26,7 +26,8 @@ defmodule HealthCheck.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ehealth_logger, git: "https://github.com/edenlabllc/ehealth_logger.git"}
+      {:ehealth_logger, git: "https://github.com/edenlabllc/ehealth_logger.git"},
+      {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"}
     ]
   end
 end
