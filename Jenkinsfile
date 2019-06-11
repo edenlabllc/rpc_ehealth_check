@@ -46,7 +46,7 @@ pipeline {
             timeout(activity: true, time: 3)
           }
           environment {
-            APPS='[{"app":"rpc-health-check","label":"rpc-health-check","namespace":"default","chart":"rpc-health-check", "deployment":"rpc-health-check"}]'
+            APPS='[{"app":"rpc_health_check","label":"rpc-health-check","namespace":"default","chart":"rpc-health-check", "deployment":"rpc-health-check"}]'
           }
           steps {
             sh '''
@@ -63,7 +63,7 @@ pipeline {
         timeout(activity: true, time: 3)
       }
       environment {
-        APPS='[{"app":"rpc-health-check","label":"rpc-health-check","namespace":"default","chart":"rpc-health-check", "deployment":"rpc-health-check"}]'
+        APPS='[{"app":"rpc_health_check","label":"rpc-health-check","namespace":"default","chart":"rpc-health-check", "deployment":"rpc-health-check"}]'
       }
       steps {
         sh '''
@@ -86,7 +86,7 @@ pipeline {
         timeout(activity: true, time: 3)
       }
       environment {
-        APPS='[{"app":"rpc-health-check","label":"rpc-health-check","namespace":"default","chart":"rpc-health-check", "deployment":"rpc-health-check"}]'
+        APPS='[{"app":"rpc_health_check","label":"rpc-health-check","namespace":"default","chart":"rpc-health-check", "deployment":"rpc-health-check"}]'
       }
       steps {
         withCredentials([string(credentialsId: '86a8df0b-edef-418f-844a-cd1fa2cf813d', variable: 'GITHUB_TOKEN')]) {
