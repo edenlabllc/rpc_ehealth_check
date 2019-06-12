@@ -22,7 +22,7 @@ defmodule HealthCheck.Worker do
     topologies = Application.get_env(:health_check, :topologies)
 
     nodes
-    |> Enum.map(fn server ->
+    |> Enum.reduce([], fn server, acc ->
       basename =
         case String.split(to_string(server), "@") do
           [basename, _] -> basename
@@ -35,8 +35,13 @@ defmodule HealthCheck.Worker do
         end)
 
       if send_check? do
-        async_health_check(server, basename)
+        acc ++ [{server, basename}]
+      else
+        acc
       end
+    end)
+    |> Enum.map(fn {server, basename} ->
+      Task.async(fn -> send_health_check(server, basename) end)
     end)
     |> Enum.each(&Task.await/1)
 
@@ -56,12 +61,6 @@ defmodule HealthCheck.Worker do
       {value, _} -> value
       _ -> 2_000
     end
-  end
-
-  defp async_health_check(server, basename) do
-    Task.async(fn ->
-      send_health_check(server, basename)
-    end)
   end
 
   defp send_health_check(server, basename) do
