@@ -27,7 +27,8 @@ defmodule HealthCheck.MixProject do
   defp deps do
     [
       {:ehealth_logger, git: "https://github.com/edenlabllc/ehealth_logger.git"},
-      {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"}
+      {:libcluster, "~> 3.0",
+       git: "https://github.com/AlexKovalevych/libcluster.git", branch: "fix_kubernetes_strategy"}
     ]
   end
 end
