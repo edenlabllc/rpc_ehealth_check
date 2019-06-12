@@ -19,9 +19,24 @@ defmodule HealthCheck.Worker do
     nodes = Node.list()
     Logger.info("Cluster nodes: #{Enum.join(nodes, ",")}")
 
+    topologies = Application.get_env(:health_check, :topologies)
+
     nodes
     |> Enum.map(fn server ->
-      Task.async(fn -> send_health_check(server) end)
+      basename =
+        case String.split(to_string(server), "@") do
+          [basename, _] -> basename
+          _ -> server
+        end
+
+      send_check? =
+        Enum.any?(topologies, fn {_, v} ->
+          v |> Keyword.get(:config) |> Keyword.get(:kubernetes_node_basename) == basename
+        end)
+
+      if send_check? do
+        async_health_check(server, basename)
+      end
     end)
     |> Enum.each(&Task.await/1)
 
@@ -43,14 +58,14 @@ defmodule HealthCheck.Worker do
     end
   end
 
-  defp send_health_check(server) do
-    Logger.info("Send health check to #{server}")
+  defp async_health_check(server, basename) do
+    Task.async(fn ->
+      send_health_check(server, basename)
+    end)
+  end
 
-    basename =
-      case String.split(to_string(server), "@") do
-        [basename, _] -> basename
-        _ -> server
-      end
+  defp send_health_check(server, basename) do
+    Logger.info("Send health check to #{server}")
 
     case get_ergonode(basename) do
       nil ->
