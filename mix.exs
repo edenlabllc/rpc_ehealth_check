@@ -1,8 +1,13 @@
 defmodule RpcHealthCheck.MixProject do
+  @moduledoc false
+
   use Mix.Project
+
+  @version "0.1.0"
 
   def project do
     [
+      version: @version,
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
       deps: deps()
