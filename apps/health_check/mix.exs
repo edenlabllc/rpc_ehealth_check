@@ -28,7 +28,8 @@ defmodule HealthCheck.MixProject do
     [
       {:ehealth_logger, git: "https://github.com/edenlabllc/ehealth_logger.git"},
       {:libcluster, "~> 3.0",
-       git: "https://github.com/AlexKovalevych/libcluster.git", branch: "fix_kubernetes_strategy"}
+       git: "https://github.com/AlexKovalevych/libcluster.git", branch: "fix_kubernetes_strategy"},
+      {:git_ops, "~> 0.6.0", only: [:dev]}
     ]
   end
 end
