@@ -18,16 +18,6 @@ config :logger,
 
 config :health_check,
   topologies: [
-    k8s_ael_api: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_node_basename: "ael_api",
-        kubernetes_selector: "app=api",
-        kubernetes_namespace: "ael",
-        polling_interval: 10_000
-      ]
-    ],
     k8s_ds_api: [
       strategy: Elixir.Cluster.Strategy.Kubernetes,
       config: [
@@ -188,16 +178,6 @@ config :health_check,
         kubernetes_node_basename: "otp_verification_api",
         kubernetes_selector: "app=api",
         kubernetes_namespace: "verification",
-        polling_interval: 10_000
-      ]
-    ],
-    k8s_blackwater: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_node_basename: "blackwater_api",
-        kubernetes_selector: "app=blackwater-api",
-        kubernetes_namespace: "default",
         polling_interval: 10_000
       ]
     ]
