@@ -39,17 +39,6 @@ config :health_check,
         polling_interval: 10_000
       ]
     ],
-    k8s_edr_api: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_ip_lookup_mode: :pods,
-        kubernetes_node_basename: "edr_api",
-        kubernetes_selector: "app=edr-api",
-        kubernetes_namespace: "edr",
-        polling_interval: 10_000
-      ]
-    ],
     k8s_ehealth_api: [
       strategy: Elixir.Cluster.Strategy.Kubernetes,
       config: [
@@ -67,16 +56,6 @@ config :health_check,
         kubernetes_node_basename: "casher",
         kubernetes_selector: "app=casher",
         kubernetes_namespace: "il",
-        polling_interval: 10_000
-      ]
-    ],
-    k8s_jabba: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_node_basename: "jabba-rpc",
-        kubernetes_selector: "app=jabba-rpc",
-        kubernetes_namespace: "jabba",
         polling_interval: 10_000
       ]
     ],
@@ -148,36 +127,6 @@ config :health_check,
         kubernetes_node_basename: "ops",
         kubernetes_selector: "app=api",
         kubernetes_namespace: "ops",
-        polling_interval: 10_000
-      ]
-    ],
-    k8s_report_cache: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_node_basename: "report_cache",
-        kubernetes_selector: "app=cache",
-        kubernetes_namespace: "reports",
-        polling_interval: 10_000
-      ]
-    ],
-    k8s_uaddresses: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_node_basename: "uaddresses_api",
-        kubernetes_selector: "app=api",
-        kubernetes_namespace: "uaddresses",
-        polling_interval: 10_000
-      ]
-    ],
-    k8s_otp_verification: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_node_basename: "otp_verification_api",
-        kubernetes_selector: "app=api",
-        kubernetes_namespace: "verification",
         polling_interval: 10_000
       ]
     ]
