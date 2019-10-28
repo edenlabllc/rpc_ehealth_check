@@ -1,4 +1,4 @@
-FROM elixir:1.8.1-alpine as builder
+FROM edenlabllc/elixir:1.9.1-otp-22-alpine as builder
 
 ARG APP_NAME
 
@@ -13,8 +13,9 @@ RUN mix do \
       local.hex --force, \
       local.rebar --force, \
       deps.get, \
-      deps.compile, \
-      release --name=${APP_NAME}
+      deps.compile
+
+RUN mix release "${APP_NAME}"
 
 RUN git log --pretty=format:"%H %cd %s" > commits.txt
 
@@ -31,12 +32,10 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-COPY --from=builder /app/_build/prod/rel/${APP_NAME}/releases/0.1.0/${APP_NAME}.tar.gz /app
+COPY --from=builder /app/_build /app
 COPY --from=builder /app/commits.txt /app
-
-RUN tar -xzf ${APP_NAME}.tar.gz; rm ${APP_NAME}.tar.gz
 
 ENV REPLACE_OS_VARS=true \
       APP=${APP_NAME}
 
-CMD ./bin/${APP} foreground
+CMD prod/rel/${APP}/bin/${APP} start
