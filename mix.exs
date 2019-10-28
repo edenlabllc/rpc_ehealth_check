@@ -10,7 +10,13 @@ defmodule RpcHealthCheck.MixProject do
       version: @version,
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: [
+        rpc_health_check: [
+          include_executables_for: [:unix],
+          applications: [runtime_tools: :permanent, health_check: :permanent]
+        ]
+      ]
     ]
   end
 
@@ -21,7 +27,6 @@ defmodule RpcHealthCheck.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:distillery, "~> 2.0", runtime: false, override: true},
       {:credo, "~> 1.0", only: [:dev, :test]}
     ]
   end

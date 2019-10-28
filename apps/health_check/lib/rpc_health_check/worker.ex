@@ -17,7 +17,7 @@ defmodule HealthCheck.Worker do
   @impl true
   def handle_info(:check, state) do
     nodes = Node.list()
-    Logger.info("Cluster nodes: #{Enum.join(nodes, ",")}")
+    Logger.info("Cluster nodes: " <> Enum.join(nodes, ","))
 
     topologies = Application.get_env(:health_check, :topologies)
 

@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :health_check,
   env: Mix.env()
