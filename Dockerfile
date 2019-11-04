@@ -24,6 +24,7 @@ FROM alpine:3.9
 ARG APP_NAME
 
 RUN apk add --no-cache \
+      tini \
       ncurses-libs \
       zlib \
       ca-certificates \
@@ -37,5 +38,7 @@ COPY --from=builder /app/commits.txt /app
 
 ENV REPLACE_OS_VARS=true \
       APP=${APP_NAME}
+
+ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD prod/rel/${APP}/bin/${APP} start
