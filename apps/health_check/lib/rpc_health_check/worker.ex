@@ -77,10 +77,13 @@ defmodule HealthCheck.Worker do
         end
 
       ergonode_config ->
-        pid = GenServer.call({ergonode_config["process"], server}, ergonode_config["pid_message"])
-
-        :global.register_name(server, pid)
-        GenServer.cast(pid, :check)
+        try do
+          pid = GenServer.call({ergonode_config["process"], server}, ergonode_config["pid_message"], 500)
+          :global.register_name(server, pid)
+          GenServer.cast(pid, :check)
+        catch
+          :exit, _ -> Logger.warn("Failed to send edgonode check #{server}")
+        end
     end
   end
 end
