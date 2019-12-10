@@ -71,13 +71,15 @@ pipeline {
           chmod +x ./start-container.sh;
           ./start-container.sh;
         '''
-        withCredentials(bindings: [usernamePassword(credentialsId: '8232c368-d5f5-4062-b1e0-20ec13b0d47b', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-          sh 'echo " ---- step: Push docker image ---- ";'
-          sh '''
-              curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/push-changes.sh -o push-changes.sh;
-              chmod +x ./push-changes.sh;
-              ./push-changes.sh
-            '''
+        withCredentials([string(credentialsId: '86a8df0b-edef-418f-844a-cd1fa2cf813d', variable: 'GITHUB_TOKEN')]) {
+          withCredentials(bindings: [usernamePassword(credentialsId: '8232c368-d5f5-4062-b1e0-20ec13b0d47b', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            sh 'echo " ---- step: Push docker image ---- ";'
+            sh '''
+                curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/push-changes.sh -o push-changes.sh;
+                chmod +x ./push-changes.sh;
+                ./push-changes.sh
+              '''
+          }
         }
       }
     }
