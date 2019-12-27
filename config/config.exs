@@ -3,11 +3,6 @@ import Config
 config :health_check,
   env: Mix.env()
 
-config :health_check,
-  ergonodes: [
-    %{"basename" => "me_transactions", "process" => :mongo_transaction, "pid_message" => :pid}
-  ]
-
 config :logger_json, :backend,
   formatter: EhealthLogger.Formatter,
   metadata: :all
@@ -65,17 +60,6 @@ config :health_check,
         mode: :dns,
         kubernetes_node_basename: "medical_events_api",
         kubernetes_selector: "app=api-medical-events",
-        kubernetes_namespace: "me",
-        polling_interval: 10_000
-      ]
-    ],
-    k8s_me_transactions: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes,
-      config: [
-        mode: :dns,
-        kubernetes_ip_lookup_mode: :pods,
-        kubernetes_node_basename: "me_transactions",
-        kubernetes_selector: "app=me-transactions",
         kubernetes_namespace: "me",
         polling_interval: 10_000
       ]
