@@ -5,6 +5,21 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [0.3.0](https://github.com/edenlabllc/rpc_health_check/compare/0.2.0...0.3.0) (2019-12-27)
+
+
+
+
+### Features:
+
+* drop me_transactions (#23)
+
+* Elixir 1.9 (#14)
+
+* drop services from check (#13)
+
+* add blackwater check (#9)
+
 ## [0.2.0](https://github.com/edenlabllc/rpc_health_check/compare/0.1.0...0.2.0) (2019-11-1)
 
 
